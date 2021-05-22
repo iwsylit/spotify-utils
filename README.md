@@ -6,7 +6,7 @@ Some handy utils for Spotify:
 3. *To add: playlist shuffling*
 
 ## Requirements
-**Python 3** and the **spotipy** package have to be installed.
+**Python 3** and **spotipy**, **tqdm** packages have to be installed.
 
 ### Connecting to Spotify's API
 You have to connect to Spotify's API to use these utils.

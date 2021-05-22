@@ -1,4 +1,8 @@
 from client import spotify_client
+from tqdm import tqdm
+import os
+
+os.chdir(os.path.dirname(os.path.relpath(__file__)))
 
 
 def get_playlist_items(playlist_id):
@@ -17,21 +21,29 @@ def get_track_ids(playlist_items):
 
 def get_playlist_track_ids(playlist_ids):
     track_ids = []
-    for playlist_id in playlist_ids:
-        track_ids += get_track_ids(get_playlist_items(playlist_id))
+
+    with tqdm(total=len(playlist_ids), desc='getting songs from playlists', leave=False) as pbar:
+        for playlist_id in playlist_ids:
+            track_ids += get_track_ids(get_playlist_items(playlist_id))
+            pbar.update(1)
 
     return track_ids
 
 
 def add_tracks_to_playlist(playlist_id, track_ids):
-    for i in range(0, len(track_ids), 100):
-        spotify_client.playlist_add_items(playlist_id, track_ids[i: i + 100])
+    with tqdm(total=len(track_ids), desc='clearing playlist', leave=False) as pbar:
+        for i in range(0, len(track_ids), 100):
+            spotify_client.playlist_add_items(playlist_id, track_ids[i: i + 100])
+            pbar.update(100)
 
 
 def clear_playlist(playlist_id):
     track_ids = get_track_ids(get_playlist_items(playlist_id))
-    for i in range(0, len(track_ids), 100):
-        spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i + 100])
+
+    with tqdm(total=len(track_ids), desc='clearing playlist', leave=False) as pbar:
+        for i in range(0, len(track_ids), 100):
+            spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i + 100])
+            pbar.update(100)
 
 
 def get_user_playlists(user_id):
