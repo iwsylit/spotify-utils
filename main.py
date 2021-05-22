@@ -36,8 +36,8 @@ def move_to_top(n, playlist_name):
 if __name__ == '__main__':
     parser = ArgumentParser()
 
-    parser.add_argument('mode', help='"lucky" or "move"')
-    parser.add_argument('-f', '--force', action='store_true', help='clear lucky playlist')
+    parser.add_argument('mode', help='"lucky" or "move" - which utility you want to use')
+    parser.add_argument('-f', '--force', action='store_true', help='clear the lucky playlist before update')
     parser.add_argument('-p', '--playlist_name', default=default_move_playlist_name, type=str,
                         help='name of the playlist to reorder')
     parser.add_argument('-n', '--n', default=1, type=int, help='how much songs to move to the top')
