@@ -3,7 +3,7 @@
 Some handy utils for Spotify:
 1. Move N songs from the bottom of a specified playlist to the top *(can't live without this function)*
 2. Gather songs from all your playlists to a specified *"lucky"* playlist *(to play all your songs randomly)*
-3. Shuffle specified playlist.
+3. Shuffle a specified playlist.
 4. *Something else?*
 
 ## Requirements
