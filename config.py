@@ -1,7 +1,7 @@
 config = dict(
     user_id='',
-    lucky_playlist_id='',
+    default_lucky_playlist_name='',
     # do not forget to add the lucky playlist to the excluded list too
-    excluded_playlist_ids=[''],
-    move_playlist=''
+    excluded_playlist_names=[''],
+    default_move_playlist_name=''
 )
