@@ -3,7 +3,7 @@
 Some handy utils for Spotify:
 1. Move N songs from the bottom of a specified playlist to the top *(can't live without this function)*
 2. Gather songs from all your playlists to a specified *"lucky"* playlist *(to play all your songs randomly)*
-3. *To add: playlist shuffling*
+3. Shuffle specified playlist.
 4. *Something else?*
 
 ## Requirements
@@ -38,7 +38,7 @@ Fill `config.py` file:
 ```python3 main.py mode [-f] [-p PLAYLIST_NAME] [-n N]```
 
 positional arguments:
- * mode = "lucky" or "move" - which utility you want to use
+ * mode = "lucky", "move" or "shuffle" - which utility you want to use
 
 optional arguments:
  * **-f** - clear the lucky playlist before update
@@ -54,3 +54,5 @@ optional arguments:
     - ```python3 main.py move```
  * Move three songs from the bottom to the top of the *PLAYLIST_NAME* playlist 
     - ```python3 main.py move -p PLAYLIST_NAME -n 3```
+ * Shuffle *PLAYLIST_NAME* playlist
+    - ```python3 main.py shuffle -p PLAYLIST_NAME```

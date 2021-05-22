@@ -1,6 +1,7 @@
 from client import spotify_client
 from tqdm import tqdm
 import os
+from random import sample
 
 os.chdir(os.path.dirname(os.path.relpath(__file__)))
 
@@ -25,7 +26,7 @@ def get_playlist_track_ids(playlist_ids):
     with tqdm(total=len(playlist_ids), desc='getting songs from your playlists', leave=False) as pbar:
         for playlist_id in playlist_ids:
             track_ids += get_track_ids(get_playlist_items(playlist_id))
-            pbar.update(1)
+            pbar.update()
 
     return track_ids
 
@@ -81,3 +82,17 @@ def move_n_tracks_to_top(n, playlist_id):
                                           range_start=playlist_len - n,
                                           insert_before=0,
                                           range_length=n)
+
+
+def shuffle_playlist(playlist_id):
+    playlist_len = spotify_client.playlist(playlist_id)['tracks']['total']
+
+    positions = sample(range(playlist_len), playlist_len)
+
+    with tqdm(total=playlist_len, desc='shuffling tracks', leave=False) as pbar:
+        for p in positions:
+            spotify_client.playlist_reorder_items(playlist_id,
+                                                  range_start=0,
+                                                  insert_before=p,
+                                                  range_length=1)
+            pbar.update()

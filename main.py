@@ -33,10 +33,16 @@ def move_to_top(n, playlist_name):
     move_n_tracks_to_top(n, playlist_id)
 
 
+def shuffle(playlist_name):
+    playlist_id = playlist_name_to_id(user_id, playlist_name)
+
+    shuffle_playlist(playlist_id)
+
+
 if __name__ == '__main__':
     parser = ArgumentParser()
 
-    parser.add_argument('mode', help='"lucky" or "move" - which utility you want to use')
+    parser.add_argument('mode', help='"lucky", "move" or "shuffle" - which utility you want to use')
     parser.add_argument('-f', '--force', action='store_true', help='clear the lucky playlist before update')
     parser.add_argument('-p', '--playlist_name', default=default_move_playlist_name, type=str,
                         help='name of the playlist to reorder')
@@ -46,5 +52,9 @@ if __name__ == '__main__':
 
     if args.mode == 'lucky':
         update_lucky(args.force)
-    if args.mode == 'move':
+    elif args.mode == 'move':
         move_to_top(args.n, args.playlist_name)
+    elif args.mode == 'shuffle':
+        shuffle(args.playlist_name)
+    else:
+        raise NotImplementedError('This utility does not exist for now.')
