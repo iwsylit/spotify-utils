@@ -41,13 +41,13 @@ def get_playlist_track_ids(playlist_ids):
 
 def add_tracks_to_playlist(playlist_id, tracks):
     for i in range(0, len(tracks), 100):
-        spotify_client.playlist_add_items(playlist_id, tracks[i: i+100])
+        spotify_client.playlist_add_items(playlist_id, tracks[i: i + 100])
 
 
 def clear_playlist(playlist_id):
     track_ids = get_track_ids(get_playlist_items(playlist_id))
     for i in range(0, len(track_ids), 100):
-        spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i+100])
+        spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i + 100])
 
 
 def move_n_tracks_to_top(n, playlist_id):
