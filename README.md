@@ -7,4 +7,4 @@ Some handy utils for Spotify.
 
 Before using make sure to:
 1. Set the SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET and SPOTIPY_REDIRECT_URI variables in the authentication file
-2. Fill user_id and lucky_playlist_id in the config file
+2. Fill user_id and lucky_playlist_id in the config file (if you want private support add )
