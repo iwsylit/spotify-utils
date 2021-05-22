@@ -16,7 +16,7 @@ Do that once before the first start:
  * Click Create an app
  * Put your Client ID and Client Secret into the client.py file
  * Now click Edit Settings
- * Add http://localhost:8888/callback to the Redirect URIs
+ * Add http://localhost:8888/callback/ to the Redirect URIs
  * Scroll down and click Save
  * Put the Redirect URI into the client.py file
  * You are now ready to authenticate with Spotify!
