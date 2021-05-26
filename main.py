@@ -1,5 +1,6 @@
 from functions import update_lucky, move_to_top, shuffle
 from argparse import ArgumentParser
+from config import default_move_playlist_name
 import sys
 
 
@@ -7,12 +8,12 @@ class CLI:
     def __init__(self):
         parser = ArgumentParser()
 
-        parser.add_argument('mode', help='"lucky", "move" or "shuffle" - which utility you want to use')
+        parser.add_argument('mode', help='"lucky", "move" or "shuffle"')
 
         args = parser.parse_args(sys.argv[1:2])
 
         if not hasattr(self, args.mode):
-            print('Unrecognized command')
+            print(f'"{args.mode}" mode does not exist.')
             parser.print_help()
             exit(1)
 
@@ -22,7 +23,7 @@ class CLI:
     def lucky():
         parser = ArgumentParser()
 
-        parser.add_argument('-f', '--force', action='store_true', help='clear the lucky playlist before update')
+        parser.add_argument('-f', '--force', action='store_true', help='rebuild the lucky playlist')
 
         args = parser.parse_args(sys.argv[2:])
 
@@ -32,9 +33,9 @@ class CLI:
     def move():
         parser = ArgumentParser()
 
-        parser.add_argument('-p', '--playlist_name', default=None, type=str,
+        parser.add_argument('playlist_name', default=default_move_playlist_name, type=str,
                             help='name of the playlist to reorder')
-        parser.add_argument('-n', '--n', default=1, type=int, help='how much songs to move to the top')
+        parser.add_argument('n', default=1, type=int, help='how much songs to move to the top')
 
         args = parser.parse_args(sys.argv[2:])
 
@@ -44,8 +45,8 @@ class CLI:
     def shuffle():
         parser = ArgumentParser()
 
-        parser.add_argument('-p', '--playlist_name', default=None, type=str,
-                            help='name of the playlist to reorder')
+        parser.add_argument('playlist_name', default=None, type=str,
+                            help='name of the playlist to shuffle')
 
         args = parser.parse_args(sys.argv[2:])
 

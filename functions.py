@@ -1,10 +1,5 @@
-from config import config
+from config import user_id, lucky_playlist_name, excluded_playlist_names
 from utils import *
-
-user_id = config['user_id']
-lucky_playlist_name = config['default_lucky_playlist_name']
-excluded_playlist_names = config['excluded_playlist_names']
-default_move_playlist_name = config['default_move_playlist_name']
 
 
 def update_lucky(force):
@@ -27,9 +22,6 @@ def update_lucky(force):
 
 
 def move_to_top(n, playlist_name):
-    if not playlist_name:
-        playlist_name = default_move_playlist_name
-
     playlist_id = playlist_name_to_id(user_id, playlist_name)
 
     move_n_tracks_to_top(n, playlist_id)
