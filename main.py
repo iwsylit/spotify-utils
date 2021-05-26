@@ -6,7 +6,9 @@ import sys
 
 class CLI:
     def __init__(self):
-        parser = ArgumentParser()
+        parser = ArgumentParser(
+            usage='python3 main.py <mode> [<args>]'
+        )
 
         parser.add_argument('mode', help='"lucky", "move" or "shuffle"')
 
@@ -21,7 +23,7 @@ class CLI:
 
     @staticmethod
     def lucky():
-        parser = ArgumentParser()
+        parser = ArgumentParser(usage='python3 main.py lucky [-f]')
 
         parser.add_argument('-f', '--force', action='store_true', help='rebuild the lucky playlist')
 
@@ -31,11 +33,11 @@ class CLI:
 
     @staticmethod
     def move():
-        parser = ArgumentParser()
+        parser = ArgumentParser(usage='python3 main.py move [-p PLAYLIST_NAME] [-n N]')
 
-        parser.add_argument('playlist_name', default=default_move_playlist_name, type=str,
+        parser.add_argument('-p', '--playlist_name', required=False, default=default_move_playlist_name, type=str,
                             help='name of the playlist to reorder')
-        parser.add_argument('n', default=1, type=int, help='how much songs to move to the top')
+        parser.add_argument('-n', '--n', required=False, default=1, type=int, help='how much songs to move to the top')
 
         args = parser.parse_args(sys.argv[2:])
 
@@ -43,7 +45,7 @@ class CLI:
 
     @staticmethod
     def shuffle():
-        parser = ArgumentParser()
+        parser = ArgumentParser(usage='python3 main.py shuffle <playlist_name>')
 
         parser.add_argument('playlist_name', default=None, type=str,
                             help='name of the playlist to shuffle')

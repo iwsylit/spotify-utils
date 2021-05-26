@@ -32,27 +32,19 @@ Fill `config.py` file:
  * Fill your user id
  * Create the lucky playlist and fill its name
  * Fill names of the playlists you don't want to be added to the lucky playlist
- * Optionally fill the default playlist for song moving.
+ * Optionally fill the default playlist for song moving
 
 ## Usage
-```python3 main.py mode [-f] [-p PLAYLIST_NAME] [-n N]```
-
-positional arguments:
- * mode = "lucky", "move" or "shuffle" - which utility you want to use
-
-optional arguments:
- * **-f** - clear the lucky playlist before update
- * **-p PLAYLIST_NAME** - name of the playlist to reorder
- * **-n N** - how much songs to move to the top
+`python3 main.py <mode> [<args>]` \
+Possible modes: "lucky", "move" and "shuffle". \
+Use `python3 main.py <mode> -h` to see possible arguments.
 
 ### examples
  * Add new songs to the lucky playlist
     - ```python3 main.py lucky```
- * Update the lucky playlist from scratch
-    - ```python3 main.py lucky -f```
  * Move one song from the bottom to the top of the default playlist
     - ```python3 main.py move```
  * Move three songs from the bottom to the top of the *PLAYLIST_NAME* playlist 
     - ```python3 main.py move -p PLAYLIST_NAME -n 3```
  * Shuffle *PLAYLIST_NAME* playlist
-    - ```python3 main.py shuffle -p PLAYLIST_NAME```
+    - ```python3 main.py shuffle PLAYLIST_NAME```
