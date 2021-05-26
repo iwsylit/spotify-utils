@@ -4,7 +4,8 @@ Some handy utils for Spotify:
 1. Move N songs from the bottom of a specified playlist to the top *(can't live without this function)*
 2. Gather songs from all your playlists to a specified *"lucky"* playlist *(to play all your songs randomly)*
 3. Shuffle specified playlist
-4. *Something else?*
+4. Create playlist containing your top songs of all time, the last six months and the last month
+5. *Something else?*
 
 ## Requirements
 **Python 3** and **spotipy**, **tqdm** packages have to be installed.
@@ -36,15 +37,22 @@ Fill `config.py` file:
 
 ## Usage
 `python3 main.py <mode> [<args>]` \
-Possible modes: "lucky", "move" and "shuffle". \
-Use `python3 main.py <mode> -h` to see possible arguments.
+Possible modes:
+ * "lucky" - create playlist containing all your songs
+ * "move" - move n songs from the bottom to the top of a playlist
+ * "shuffle" - shuffle songs in a playlist
+ * "top_playlist" - create playlist containing your top songs
+   
+Use `python3 main.py <mode> -h` to see arguments of each mode.
 
 ### examples
  * Add new songs to the lucky playlist
-    - ```python3 main.py lucky```
+    - `python3 main.py lucky`
  * Move one song from the bottom to the top of the default playlist
-    - ```python3 main.py move```
+    - `python3 main.py move`
  * Move three songs from the bottom to the top of the *PLAYLIST_NAME* playlist 
-    - ```python3 main.py move -p PLAYLIST_NAME -n 3```
+    - `python3 main.py move -p PLAYLIST_NAME -n 3`
  * Shuffle *PLAYLIST_NAME* playlist
-    - ```python3 main.py shuffle PLAYLIST_NAME```
+    - `python3 main.py shuffle PLAYLIST_NAME`
+ * Create a playlist containing 50 your top songs the last month
+    - `python3 main.py top_playlist -tr short_term -n 50`

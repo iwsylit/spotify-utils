@@ -8,8 +8,7 @@ class CLI:
     def __init__(self):
         parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
-        parser.add_argument('mode', help='"lucky", "move", "shuffle" or "top_playlist"',
-                            choices=["lucky", "move", "shuffle", "top_playlist"])
+        parser.add_argument('mode', choices=["lucky", "move", "shuffle", "top_playlist"])
 
         args = parser.parse_args(sys.argv[1:2])
 
@@ -53,7 +52,7 @@ class CLI:
         parser = ArgumentParser(usage='python3 main.py top_playlist <playlist_name>')
 
         parser.add_argument('-tr', '--time_range', default='short_term', type=str,
-                            help='"short_term" (1 month), "medium_term" (6 months) or "long_term" (all data)',
+                            help='"short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data',
                             choices=["short_term", "medium_term", "long_term"])
         parser.add_argument('-n', '--n', default=30, type=int,
                             help='how much songs add to the playlist (up to 50)')
