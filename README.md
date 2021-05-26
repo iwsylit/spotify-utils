@@ -4,7 +4,7 @@ Some handy utils for Spotify:
 1. Move N songs from the bottom of a specified playlist to the top *(can't live without this function)*
 2. Gather songs from all your playlists to a specified *"lucky"* playlist *(to play all your songs randomly)*
 3. Shuffle specified playlist
-4. Create playlist containing your top songs of all time, the last six months and the last month
+4. Create playlist containing your top songs of all time, the last six months or the last month
 5. *Something else?*
 
 ## Requirements
