@@ -39,6 +39,14 @@ def add_tracks_to_playlist(playlist_id, track_ids):
             pbar.update(100)
 
 
+def delete_tracks_from_playlist(playlist_id, track_ids):
+    length = len(track_ids)
+    with tqdm(total=length, desc='deleting tracks', leave=False) as pbar:
+        for i in range(0, length, 100):
+            spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i + 100])
+            pbar.update(100)
+
+
 def clear_playlist(playlist_id):
     track_ids = get_track_ids(get_playlist_items(playlist_id))
 
@@ -64,7 +72,7 @@ def exclude(full_list, excluded_list):
     return [item for item in full_list if item not in excluded_list]
 
 
-def playlist_name_to_id(user_id, playlist_name):
+def create_playlist_name_to_id_dict(user_id):
     user_playlists = get_user_playlists(user_id)
 
     playlist_names = get_playlist_names(user_playlists)
@@ -72,11 +80,15 @@ def playlist_name_to_id(user_id, playlist_name):
 
     name_to_id_dict = dict(zip(playlist_names, playlist_ids))
 
-    if playlist_name not in name_to_id_dict.keys():
+    return name_to_id_dict
+
+
+def playlist_name_to_id(playlist_name, playlist_name_to_id_dict):
+    if playlist_name not in playlist_name_to_id_dict.keys():
         print(f'"{playlist_name}" playlist does not exist.')
         exit()
 
-    return name_to_id_dict[playlist_name]
+    return playlist_name_to_id_dict[playlist_name]
 
 
 def move_n_tracks_to_top(n, playlist_id):
@@ -104,3 +116,23 @@ def shuffle_playlist(playlist_id):
                                                   insert_before=p,
                                                   range_length=1)
             pbar.update()
+
+
+def get_user_top_track_ids(time_range, limit):
+    top_tracks = spotify_client.current_user_top_tracks(time_range=time_range, limit=limit)['items']
+    top_track_ids = [track['id'] for track in top_tracks]
+
+    return top_track_ids
+
+
+def create_playlist(user_id, playlist_name, description):
+    return spotify_client.user_playlist_create(user_id, playlist_name, description=description)
+
+
+def time_range_to_str(time_range):
+    if time_range == 'short_term':
+        return 'last month'
+    elif time_range == 'medium_term':
+        return 'last six months'
+    else:
+        return 'since opened spotify for the first time'

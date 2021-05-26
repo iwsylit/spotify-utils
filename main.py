@@ -1,4 +1,4 @@
-from modes import update_lucky, move_to_top, shuffle
+from modes import update_lucky, move_to_top, shuffle, create_top_songs_playlist
 from argparse import ArgumentParser
 from config import default_move_playlist_name
 import sys
@@ -8,14 +8,10 @@ class CLI:
     def __init__(self):
         parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
-        parser.add_argument('mode', help='"lucky", "move" or "shuffle"')
+        parser.add_argument('mode', help='"lucky", "move", "shuffle" or "top_playlist"',
+                            choices=["lucky", "move", "shuffle", "top_playlist"])
 
         args = parser.parse_args(sys.argv[1:2])
-
-        if not hasattr(self, args.mode):
-            print(f'"{args.mode}" mode does not exist.')
-            parser.print_help()
-            exit()
 
         getattr(self, args.mode)()
 
@@ -33,9 +29,9 @@ class CLI:
     def move():
         parser = ArgumentParser(usage='python3 main.py move [-p PLAYLIST_NAME] [-n N]')
 
-        parser.add_argument('-p', '--playlist_name', required=False, default=default_move_playlist_name, type=str,
+        parser.add_argument('-p', '--playlist_name', default=default_move_playlist_name, type=str,
                             help='name of the playlist to reorder')
-        parser.add_argument('-n', '--n', required=False, default=1, type=int, help='how much songs to move to the top')
+        parser.add_argument('-n', '--n', default=1, type=int, help='how much songs to move to the top')
 
         args = parser.parse_args(sys.argv[2:])
 
@@ -51,6 +47,22 @@ class CLI:
         args = parser.parse_args(sys.argv[2:])
 
         shuffle(args.playlist_name)
+
+    @staticmethod
+    def top_playlist():
+        parser = ArgumentParser(usage='python3 main.py top_playlist <playlist_name>')
+
+        parser.add_argument('-tr', '--time_range', default='short_term', type=str,
+                            help='"short_term" (1 month), "medium_term" (6 months) or "long_term" (all data)',
+                            choices=["short_term", "medium_term", "long_term"])
+        parser.add_argument('-n', '--n', default=30, type=int,
+                            help='how much songs add to the playlist (up to 50)')
+        parser.add_argument('-p', '--playlist_name', default=None, type=str, help='how to call this top playlist')
+        parser.add_argument('-d', '--description', default=None, type=str, help='describe your top playlist')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        create_top_songs_playlist(args.time_range, args.n, args.playlist_name, args.description)
 
 
 if __name__ == '__main__':
