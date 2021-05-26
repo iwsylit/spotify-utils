@@ -1,7 +1,7 @@
 from client import spotify_client
+from random import sample
 from tqdm import tqdm
 import os
-from random import sample
 
 os.chdir(os.path.dirname(os.path.relpath(__file__)))
 
