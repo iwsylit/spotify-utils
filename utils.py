@@ -72,10 +72,18 @@ def playlist_name_to_id(user_id, playlist_name):
 
     name_to_id_dict = dict(zip(playlist_names, playlist_ids))
 
+    if playlist_name not in name_to_id_dict.keys():
+        print(f'"{playlist_name}" playlist does not exist.')
+        exit()
+
     return name_to_id_dict[playlist_name]
 
 
 def move_n_tracks_to_top(n, playlist_id):
+    if n < 1:
+        print(f'I won\'t move less than one song.')
+        exit()
+
     track_ids = get_track_ids(get_playlist_items(playlist_id))
     playlist_len = len(track_ids)
     spotify_client.playlist_reorder_items(playlist_id,

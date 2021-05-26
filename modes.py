@@ -20,14 +20,23 @@ def update_lucky(force):
 
     add_tracks_to_playlist(lucky_playlist_id, tracks_to_add)
 
+    print('Your lucky playlist has been updated.')
+
 
 def move_to_top(n, playlist_name):
     playlist_id = playlist_name_to_id(user_id, playlist_name)
 
     move_n_tracks_to_top(n, playlist_id)
 
+    if n == 1:
+        print(f'1 song of "{playlist_name}" playlist has been moved to the top.')
+    else:
+        print(f'{n} songs of "{playlist_name}" playlist have been moved to the top.')
+
 
 def shuffle(playlist_name):
     playlist_id = playlist_name_to_id(user_id, playlist_name)
 
     shuffle_playlist(playlist_id)
+
+    print(f'"{playlist_name}" playlist has been shuffled.')

@@ -1,4 +1,4 @@
-from functions import update_lucky, move_to_top, shuffle
+from modes import update_lucky, move_to_top, shuffle
 from argparse import ArgumentParser
 from config import default_move_playlist_name
 import sys
@@ -6,9 +6,7 @@ import sys
 
 class CLI:
     def __init__(self):
-        parser = ArgumentParser(
-            usage='python3 main.py <mode> [<args>]'
-        )
+        parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
         parser.add_argument('mode', help='"lucky", "move" or "shuffle"')
 
@@ -17,7 +15,7 @@ class CLI:
         if not hasattr(self, args.mode):
             print(f'"{args.mode}" mode does not exist.')
             parser.print_help()
-            exit(1)
+            exit()
 
         getattr(self, args.mode)()
 
