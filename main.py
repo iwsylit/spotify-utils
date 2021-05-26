@@ -51,7 +51,7 @@ class CLI:
     def top_playlist():
         parser = ArgumentParser(usage='python3 main.py top_playlist <playlist_name>')
 
-        parser.add_argument('-tr', '--time_range', default='short_term', type=str,
+        parser.add_argument('-t', '--time_range', default='short_term', type=str,
                             help='"short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data',
                             choices=["short_term", "medium_term", "long_term"])
         parser.add_argument('-n', '--n', default=30, type=int,

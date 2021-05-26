@@ -55,4 +55,4 @@ Use `python3 main.py <mode> -h` to see arguments of each mode.
  * Shuffle *PLAYLIST_NAME* playlist
     - `python3 main.py shuffle PLAYLIST_NAME`
  * Create a playlist containing 50 your top songs the last month
-    - `python3 main.py top_playlist -tr short_term -n 50`
+    - `python3 main.py top_playlist -t short_term -n 50`
