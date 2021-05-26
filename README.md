@@ -24,7 +24,7 @@ Do that once before the first start:
    - First time you will be redirected to an official Spotify webpage to ask you for permissions.
    - After accepting the permissions, you'll be redirected to localhost. The redirect URL should be parsed automatically, so now you're done.
 
-You can also change scope in `client.py` file to 'playlist-modify-public playlist-modify-private' in order to handle your private playlists, too.
+You can also add "playlist-modify-private" scope in `client.py` file in order to handle your private playlists, too.
 
 ### Configure
 
