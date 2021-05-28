@@ -98,10 +98,17 @@ def move_n_tracks_to_top(n, playlist_id):
 
     track_ids = get_track_ids(get_playlist_items(playlist_id))
     playlist_len = len(track_ids)
-    spotify_client.playlist_reorder_items(playlist_id,
-                                          range_start=playlist_len - n,
-                                          insert_before=0,
-                                          range_length=n)
+
+    if n > playlist_len:
+        print('Number of songs you want to move is more than there are songs in the playlist,'
+              ' it could cause unexpected results, so i refuse to do it.')
+        exit()
+
+    for i in [100] * (n // 100) + [n % 100]:  # looks weird, but it is a super-hyper-extra cool engineering decision
+        spotify_client.playlist_reorder_items(playlist_id,
+                                              range_start=playlist_len - i,
+                                              insert_before=0,
+                                              range_length=i)
 
 
 def shuffle_playlist(playlist_id):

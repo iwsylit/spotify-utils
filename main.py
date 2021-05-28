@@ -63,6 +63,7 @@ class CLI:
 
         create_top_songs_playlist(args.time_range, args.n, args.playlist_name, args.description)
 
+    # TODO: sort playlist
 
 if __name__ == '__main__':
     CLI()

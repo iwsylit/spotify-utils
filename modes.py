@@ -51,6 +51,9 @@ def shuffle(playlist_name):
 def create_top_songs_playlist(time_range, n, playlist_name, description):
     if n < 1:
         print('I won\'t add less then one song to the playlist')
+    if n > 50:
+        print('That\'s too much songs, master. I\'ll put only 50 of them in the playlist.')
+        n = 50
 
     if not playlist_name:
         playlist_name = 'top songs'
