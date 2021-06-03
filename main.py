@@ -1,14 +1,14 @@
-from modes import update_lucky, move_to_top, shuffle, create_top_songs_playlist
+import sys
+from modes import *
 from argparse import ArgumentParser
 from config import default_move_playlist_name
-import sys
 
 
 class CLI:
     def __init__(self):
         parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
-        parser.add_argument('mode', choices=["lucky", "move", "shuffle", "top_playlist"])
+        parser.add_argument('mode', choices=["lucky", "move", "shuffle", "top_playlist", "fork", "merge"])
 
         args = parser.parse_args(sys.argv[1:2])
 
@@ -63,7 +63,34 @@ class CLI:
 
         create_top_songs_playlist(args.time_range, args.n, args.playlist_name, args.description)
 
+    @staticmethod
+    def fork():
+        parser = ArgumentParser(usage='python3 main.py fork <user_id> <playlist_name>')
+
+        parser.add_argument('owner_id', default=None, type=str, help='id of the user that have the playlist you want')
+        parser.add_argument('playlist_name', default=None, type=str, help='playlist to fork')
+        parser.add_argument('-n', '--name', default=None, type=str, help='name this playlist')
+        parser.add_argument('-d', '--description', default=None, type=str, help='describe this playlist')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        fork_playlist(args.owner_id, args.playlist_name, args.name, args.description)
+
+    @staticmethod
+    def merge():
+        parser = ArgumentParser(usage='python3 main.py merge <base_playlist_name> <other_playlist_name>')
+
+        parser.add_argument('base_playlist_name', default=None, type=str,
+                            help='playlist in which the other one will be merged')
+        parser.add_argument('other_playlist_name', default=None, type=str,
+                            help='playlist that will be merged into the base playlist')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        merge_playlists(args.base_playlist_name, args.other_playlist_name)
+
     # TODO: sort playlist
+
 
 if __name__ == '__main__':
     CLI()

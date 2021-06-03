@@ -57,7 +57,6 @@ def create_top_songs_playlist(time_range, n, playlist_name, description):
 
     if not playlist_name:
         playlist_name = 'top songs'
-
     if not description:
         description = f'{n} songs i listened the most {time_range_to_str(time_range)}'
 
@@ -68,3 +67,27 @@ def create_top_songs_playlist(time_range, n, playlist_name, description):
     add_tracks_to_playlist(playlist_id, top_track_ids)
 
     print(f'{time_range} top playlist containing {n} songs has been created.')
+
+
+def fork_playlist(owner_id, playlist_name, name, description):
+    if not name:
+        name = playlist_name
+    if not description:
+        description = f'playlist i\'ve stolen from {get_user_name(owner_id)}'
+
+    playlist_id = playlist_name_to_id(playlist_name, create_playlist_name_to_id_dict(owner_id))
+
+    tracks_to_add = get_track_ids(get_playlist_items(playlist_id))
+
+    new_playlist_id = create_playlist(user_id, name, description)['id']
+
+    add_tracks_to_playlist(new_playlist_id, tracks_to_add)
+
+
+def merge_playlists(base_playlist_name, other_playlist_name):
+    base_playlist_id = playlist_name_to_id(base_playlist_name, playlist_name_to_id_dict)
+    other_playlist_id = playlist_name_to_id(other_playlist_name, playlist_name_to_id_dict)
+
+    tracks_to_add = get_track_ids(get_playlist_items(other_playlist_id))
+
+    add_tracks_to_playlist(base_playlist_id, tracks_to_add)

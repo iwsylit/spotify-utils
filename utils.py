@@ -3,7 +3,7 @@ from random import sample
 from tqdm import tqdm
 import os
 
-os.chdir(os.path.dirname(os.path.relpath(__file__)))
+#os.chdir(os.path.dirname(os.path.relpath(__file__)))
 
 
 def get_playlist_items(playlist_id):
@@ -72,8 +72,8 @@ def exclude(full_list, excluded_list):
     return [item for item in full_list if item not in excluded_list]
 
 
-def create_playlist_name_to_id_dict(user_id):
-    user_playlists = get_user_playlists(user_id)
+def create_playlist_name_to_id_dict(owner_id):
+    user_playlists = get_user_playlists(owner_id)
 
     playlist_names = get_playlist_names(user_playlists)
     playlist_ids = get_playlist_ids(user_playlists)
@@ -143,3 +143,7 @@ def time_range_to_str(time_range):
         return 'last six months'
     else:
         return 'since opened spotify for the first time'
+
+
+def get_user_name(user_id):
+    return spotify_client.user(user_id)['display_name']
