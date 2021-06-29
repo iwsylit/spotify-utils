@@ -49,7 +49,7 @@ Possible modes:
    
 Use `python3 main.py <mode> -h` to see arguments for each mode.
 
-### examples
+### Examples
  * Add new songs to the lucky playlist
     - `python3 main.py lucky`
  * Move one song from the bottom to the top of the default playlist
