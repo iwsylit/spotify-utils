@@ -6,6 +6,8 @@ playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_id)
 
 def update_lucky(force):
     lucky_playlist_id = playlist_name_to_id(lucky_playlist_name, playlist_name_to_id_dict)
+
+    excluded_playlist_names.append(lucky_playlist_name)
     excluded_playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict), excluded_playlist_names))
 
     if force:

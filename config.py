@@ -1,5 +1,4 @@
-# excluded playlists - playlists that won't be added to the lucky playlist
-# do not forget to add the lucky playlist to the excluded list too
+# excluded playlists - names of playlists that won't be added to the lucky playlist
 
 user_id = ''
 lucky_playlist_name = ''
