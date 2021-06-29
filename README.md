@@ -1,14 +1,16 @@
 # spotify-utils
 
 Some handy utils for Spotify:
-1. Move N songs from the bottom of a specified playlist to the top *(can't live without this function)*
-2. Gather songs from all your playlists to a specified *"lucky"* playlist *(to play all your songs randomly)*
+1. Move N songs from the bottom of a specified playlist to the top
+2. Gather songs from all your playlists to a specified *"lucky"* playlist
 3. Shuffle specified playlist
 4. Create playlist containing your top songs of all time, the last six months or the last month
-5. *Something else?*
+5. Fork someone's playlist
+6. Merge playlists
+7. *Something else?*
 
 ## Requirements
-**Python 3** and **spotipy**, **tqdm** packages have to be installed.
+**Python 3**. **spotipy** and **tqdm** packages must be installed.
 
 ### Connecting to Spotify's API
 You have to connect to Spotify's API to use these utils.
@@ -42,8 +44,10 @@ Possible modes:
  * "move" - move n songs from the bottom to the top of a playlist
  * "shuffle" - shuffle songs in a playlist
  * "top_playlist" - create playlist containing your top songs
+ * "fork" - steal someone's playlist
+ * "merge" - merge two playlists
    
-Use `python3 main.py <mode> -h` to see arguments of each mode.
+Use `python3 main.py <mode> -h` to see arguments for each mode.
 
 ### examples
  * Add new songs to the lucky playlist
@@ -56,3 +60,5 @@ Use `python3 main.py <mode> -h` to see arguments of each mode.
     - `python3 main.py shuffle PLAYLIST_NAME`
  * Create a playlist containing 50 your top songs the last month
     - `python3 main.py top_playlist -t short_term -n 50`
+ * Steal my mischmasz playlist:
+    - `python3 main.py fork f3ed4n4boipjflbzepw7rffte mischmasz`
