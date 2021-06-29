@@ -78,18 +78,16 @@ class CLI:
 
     @staticmethod
     def merge():
-        parser = ArgumentParser(usage='python3 main.py merge <base_playlist_name> <other_playlist_name>')
+        parser = ArgumentParser(usage='python3 main.py merge <first_playlist_name> <second_playlist_name>')
 
-        parser.add_argument('base_playlist_name', default=None, type=str,
+        parser.add_argument('first_playlist_name', default=None, type=str,
                             help='playlist in which the other one will be merged')
-        parser.add_argument('other_playlist_name', default=None, type=str,
+        parser.add_argument('second_playlist_name', default=None, type=str,
                             help='playlist that will be merged into the base playlist')
 
         args = parser.parse_args(sys.argv[2:])
 
         merge_playlists(args.base_playlist_name, args.other_playlist_name)
-
-    # TODO: sort playlist
 
 
 if __name__ == '__main__':

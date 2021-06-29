@@ -72,24 +72,36 @@ def create_top_songs_playlist(time_range, n, playlist_name, description):
 
 
 def fork_playlist(owner_id, playlist_name, name, description):
-    if not name:
-        name = playlist_name
-    if not description:
-        description = f'playlist i\'ve stolen from {get_user_name(owner_id)}'
-
     playlist_id = playlist_name_to_id(playlist_name, create_playlist_name_to_id_dict(owner_id))
 
     tracks_to_add = get_track_ids(get_playlist_items(playlist_id))
+
+    if not name:
+        name = playlist_name
+    if not description:
+        description = f'{get_playlist_description(playlist_id)} // playlist i\'ve stolen from {get_user_name(owner_id)}'
 
     new_playlist_id = create_playlist(user_id, name, description)['id']
 
     add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
+    print(f'"{playlist_name}" playlist was stolen.')
 
-def merge_playlists(base_playlist_name, other_playlist_name):
-    base_playlist_id = playlist_name_to_id(base_playlist_name, playlist_name_to_id_dict)
-    other_playlist_id = playlist_name_to_id(other_playlist_name, playlist_name_to_id_dict)
 
-    tracks_to_add = get_track_ids(get_playlist_items(other_playlist_id))
+def merge_playlists(first_playlist_name, second_playlist_name):
+    base_playlist_id = playlist_name_to_id(first_playlist_name, playlist_name_to_id_dict)
+    other_playlist_id = playlist_name_to_id(second_playlist_name, playlist_name_to_id_dict)
 
-    add_tracks_to_playlist(base_playlist_id, tracks_to_add)
+    base_playlist_tracks = get_track_ids(get_playlist_items(base_playlist_id))
+    other_playlist_tracks = get_track_ids(get_playlist_items(other_playlist_id))
+    tracks_to_add = base_playlist_tracks + other_playlist_tracks
+
+    new_playlist_id = create_playlist(
+        user_id,
+        f'{first_playlist_name} + {second_playlist_name}',
+        f'"{first_playlist_name}" and "{second_playlist_name}" together'
+    )['id']
+
+    add_tracks_to_playlist(new_playlist_id, tracks_to_add)
+
+    print(f'"{first_playlist_name}" and "{second_playlist_name}" was merged.')

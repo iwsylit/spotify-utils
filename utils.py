@@ -7,6 +7,10 @@ directory = os.path.dirname(os.path.relpath(__file__))
 if directory: os.chdir(directory)
 
 
+def get_playlist_description(playlist_id):
+    return spotify_client.playlist(playlist_id)['description']
+
+
 def get_playlist_items(playlist_id):
     playlist_len = spotify_client.playlist(playlist_id)['tracks']['total']
     playlist_items = []
