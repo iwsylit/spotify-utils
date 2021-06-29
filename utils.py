@@ -3,7 +3,8 @@ from random import sample
 from tqdm import tqdm
 import os
 
-#os.chdir(os.path.dirname(os.path.relpath(__file__)))
+directory = os.path.dirname(os.path.relpath(__file__))
+if directory: os.chdir(directory)
 
 
 def get_playlist_items(playlist_id):
