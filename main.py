@@ -1,7 +1,7 @@
-import sys
-from modes import *
 from argparse import ArgumentParser
-from config import default_move_playlist_name
+from config import user_config
+from src.modes import *
+import sys
 
 
 class CLI:
@@ -28,7 +28,7 @@ class CLI:
     def move():
         parser = ArgumentParser(usage='python3 main.py move [-p PLAYLIST_NAME] [-n N]')
 
-        parser.add_argument('-p', '--playlist_name', default=default_move_playlist_name, type=str,
+        parser.add_argument('-p', '--playlist_name', default=user_config['default_move_playlist_name'], type=str,
                             help='name of the playlist to reorder')
         parser.add_argument('-n', '--n', default=1, type=int, help='how much songs to move to the top')
 
