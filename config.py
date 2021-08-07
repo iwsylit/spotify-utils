@@ -10,6 +10,6 @@ user_config = {
 spotify_client_config = {
     'client_id': '',
     'client_secret': '',
-    'redirect_uri': '',
+    'redirect_uri': 'http://localhost:8888/callback/',
     'scope': 'playlist-modify-public user-top-read'
 }
