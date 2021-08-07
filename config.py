@@ -1,7 +1,7 @@
 
 user_config = {
     'user_id': '',
-    'lucky_playlist_name': "i'm feeling lucky",
+    'lucky_playlist_name': '',
     'excluded_playlist_names': [''],  # names of playlists that won't be added to the lucky playlist
     'default_move_playlist_name': ''
 }
