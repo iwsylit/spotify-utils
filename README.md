@@ -10,7 +10,7 @@ Some handy utils for Spotify:
 7. *Something else?*
 
 ## Requirements
-**Python 3**. **spotipy** and **tqdm** packages must be installed.
+**Python 3** with ***spotipy*** and ***tqdm*** packages.
 
 ### Connecting to Spotify's API
 You have to connect to Spotify's API to use these utils.
@@ -18,7 +18,7 @@ You have to connect to Spotify's API to use these utils.
 Do that once before the first start:
  * Go to the [Spotify dashboard](https://developer.spotify.com/dashboard/applications)
  * Click Create an app
- * Put your Client ID and Client Secret into the client.py file
+ * Put your Client ID and Client Secret into the config file
  * Now click Edit Settings
  * Add http://localhost:8888/callback/ to the Redirect URIs
  * Scroll down and click Save
@@ -27,18 +27,19 @@ Do that once before the first start:
    - First time you will be redirected to an official Spotify webpage to ask you for permissions.
    - After accepting the permissions, you'll be redirected to localhost. The redirect URL should be parsed automatically, so now you're done.
 
-You can also add "playlist-modify-private" scope in `client.py` file in order to handle your private playlists, too.
+You can also add "playlist-modify-private" scope in `config.py` file in order to handle your private playlists, too.
 
 ### Configure
 
 Fill `config.py` file:
  * Fill your user id
- * Create the lucky playlist and fill its name
+ * Create the lucky playlist and fill its name (by default you have to create a playlist named "i'm feeling lucky")
  * Fill names of the playlists you don't want to be added to the lucky playlist
  * Optionally fill the default playlist for song moving
 
 ## Usage
-`python3 main.py <mode> [<args>]` \
+`python3 main.py <mode> [<args>]` 
+
 Possible modes:
  * "lucky" - create playlist containing all your songs
  * "move" - move n songs from the bottom to the top of a playlist
