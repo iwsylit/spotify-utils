@@ -34,7 +34,7 @@ You can also add "playlist-modify-private" scope in `config.py` file in order to
 
 Fill `config.py` file:
  * Fill your user id
- * Create the lucky playlist and fill its name (by default you have to create a playlist named "i'm feeling lucky")
+ * Create the lucky playlist and fill its name
  * Fill names of the playlists you don't want to be added to the lucky playlist
  * Optionally fill the default playlist for song moving
 
