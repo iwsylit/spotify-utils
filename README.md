@@ -1,9 +1,9 @@
 # spotify-utils
 
 Some handy utils for Spotify:
-1. Move N songs from the bottom of a specified playlist to the top
-2. Gather songs from all your playlists to a specified *"lucky"* playlist
-3. Shuffle specified playlist
+1. Move N songs from the bottom to the top of a specified playlist
+2. Gather songs from all your playlists to a *"lucky"* playlist
+3. Shuffle playlist
 4. Create playlist containing your top songs of all time, the last six months or the last month
 5. Fork someone's playlist
 6. Merge two playlists
