@@ -6,8 +6,9 @@ Some handy utils for Spotify:
 3. Shuffle specified playlist
 4. Create playlist containing your top songs of all time, the last six months or the last month
 5. Fork someone's playlist
-6. Merge playlists
-7. *Something else?*
+6. Merge two playlists
+7. Group playlists
+8. *Something else?*
 
 ## Requirements
 **Python 3** with ***spotipy*** and ***tqdm*** packages.
@@ -47,6 +48,7 @@ Possible modes:
  * "top_playlist" - create playlist containing your top songs
  * "fork" - steal someone's playlist
  * "merge" - merge two playlists
+ * "group" - group playlists
    
 Use `python3 main.py <mode> -h` to see arguments for each mode.
 
@@ -63,3 +65,5 @@ Use `python3 main.py <mode> -h` to see arguments for each mode.
     - `python3 main.py top_playlist -t short_term -n 50`
  * Steal my mischmasz playlist:
     - `python3 main.py fork f3ed4n4boipjflbzepw7rffte mischmasz`
+ * Create group of *PLAYLIST_NAME_1* and *PLAYLIST_NAME_2* playlists called *GROUP_NAME*:
+    - `python3 main.py group GROUP_NAME -p PLAYLIST_NAME_1 PLAYLIST_NAME_2`

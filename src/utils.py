@@ -38,7 +38,7 @@ def playlist_name_to_id(playlist_name, playlist_name_to_id_dict):
     return playlist_name_to_id_dict[playlist_name]
 
 
-def get_playlist_track_ids(playlist_ids):
+def get_playlists_track_ids(playlist_ids):
     track_ids = []
 
     with tqdm(total=len(playlist_ids), desc='getting songs from your playlists', leave=False) as pbar:

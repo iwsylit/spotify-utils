@@ -1,6 +1,9 @@
 from config import user_config
+from json import load, dump
 from src.utils import *
 from src import spoti
+import os
+
 
 playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
@@ -10,7 +13,7 @@ def update_lucky(force):
     excluded_playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict),
                                      user_config['excluded_playlist_names']))
     excluded_playlist_ids.append(lucky_playlist_id)
-    
+
     if force:
         spoti.clear_playlist(lucky_playlist_id)
 
@@ -20,8 +23,7 @@ def update_lucky(force):
     user_playlist_ids = get_playlist_ids(spoti.get_user_playlists(user_config['user_id']))
     considered_playlist_ids = exclude(user_playlist_ids, excluded_playlist_ids)
 
-    all_track_ids = get_playlist_track_ids(considered_playlist_ids)
-    unique_track_ids = set(all_track_ids)
+    unique_track_ids = set(get_playlists_track_ids(considered_playlist_ids))
 
     tracks_to_add = exclude(unique_track_ids, lucky_playlist_track_ids)
     tracks_to_delete = exclude(lucky_playlist_track_ids, unique_track_ids)
@@ -108,3 +110,49 @@ def merge_playlists(first_playlist_name, second_playlist_name):
     spoti.add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
     print('"{}" and "{}" was merged.'.format(first_playlist_name, second_playlist_name))
+
+
+def group_playlists(group_name, description, playlists):
+    if os.path.exists('.groups'):
+        with open('.groups') as f:
+            groups = load(f)
+    else:
+        groups = {}
+
+    if group_name in groups.keys():
+        playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict),
+                                groups[group_name]['playlists']))
+        group_id = groups[group_name]['group_id']
+
+        group_track_ids = get_track_ids(spoti.get_playlist_items(group_id))
+        unique_groupped_track_ids = set(get_playlists_track_ids(playlist_ids))
+
+        tracks_to_add = exclude(unique_groupped_track_ids, group_track_ids)
+        tracks_to_delete = exclude(group_track_ids, unique_groupped_track_ids)
+
+        spoti.add_tracks_to_playlist(group_id, tracks_to_add)
+        spoti.delete_tracks_from_playlist(group_id, tracks_to_delete)
+
+        print('{} group has been updated.'.format(group_name))
+    else:
+        if not playlists:
+            print('Have not found this group. Specify playlist names to group them.')
+            exit()
+        if not description:
+            description = 'group of the {} playlists'.format(', '.join(playlists))
+
+        playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict), playlists))
+        group_id = spoti.create_playlist(user_config['user_id'], group_name, description)['id']
+
+        spoti.add_tracks_to_playlist(group_id, list(set(get_playlists_track_ids(playlist_ids))))
+
+        groups[group_name] = {
+            'group_id': group_id,
+            'playlists': playlists
+        }
+
+        with open('.groups', 'w') as f:
+            dump(groups, f, indent=4)
+
+        print('{} group has been created. To update it you can use "main.py group {}" '
+              'command without additional parameters'.format(group_name, group_name))

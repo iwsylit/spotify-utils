@@ -8,7 +8,7 @@ class CLI:
     def __init__(self):
         parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
-        parser.add_argument('mode', choices=["lucky", "move", "shuffle", "top_playlist", "fork", "merge"])
+        parser.add_argument('mode', choices=['lucky', 'move', 'shuffle', 'top_playlist', 'fork', 'merge', 'group'])
 
         args = parser.parse_args(sys.argv[1:2])
 
@@ -88,6 +88,19 @@ class CLI:
         args = parser.parse_args(sys.argv[2:])
 
         merge_playlists(args.base_playlist_name, args.other_playlist_name)
+
+    @staticmethod
+    def group():
+        parser = ArgumentParser(usage='python3 main.py group <group_name> [-d DESCRIPTION] [-p PLAYLIST_1 PLAYLIST_2 ...]')
+
+        parser.add_argument('group_name', type=str,
+                            help='name the group')
+        parser.add_argument('-d', '--description', default=None, type=str, help='describe this playlist')
+        parser.add_argument('-p', '--playlists', nargs='+', default=None, help='playlists to group')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        group_playlists(args.group_name, args.description, args.playlists)
 
 
 if __name__ == '__main__':
