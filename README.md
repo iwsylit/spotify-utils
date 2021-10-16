@@ -8,7 +8,8 @@ Some handy utils for Spotify:
 5. Fork someone's playlist
 6. Merge two playlists
 7. Group playlists
-8. *Something else?*
+8. Gather songs from all your playlists to a specified *"news"* playlist and order them by date added
+9. *Something else?*
 
 ## Requirements
 **Python 3** with ***spotipy*** and ***tqdm*** packages.
@@ -28,7 +29,8 @@ Do that once before the first start:
    - First time you will be redirected to an official Spotify webpage to ask you for permissions.
    - After accepting the permissions, you'll be redirected to localhost. The redirect URL should be parsed automatically, so now you're done.
 
-You can also add "playlist-modify-private" scope in `config.py` file in order to handle your private playlists, too.
+You can also add "playlist-modify-private" scope in `config.py` file in order to handle your private playlists, too. 
+(*probably; i did not test that*)
 
 ### Configure
 
@@ -49,6 +51,7 @@ Possible modes:
  * "fork" - steal someone's playlist
  * "merge" - merge two playlists
  * "group" - group playlists
+ * "news" - create playlist containing all your songs ordered by date added
    
 Use `python3 main.py <mode> -h` to see arguments for each mode.
 

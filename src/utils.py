@@ -38,15 +38,15 @@ def playlist_name_to_id(playlist_name, playlist_name_to_id_dict):
     return playlist_name_to_id_dict[playlist_name]
 
 
-def get_playlists_track_ids(playlist_ids):
-    track_ids = []
+def get_playlists_tracks(playlist_ids):
+    playlist_items = []
 
     with tqdm(total=len(playlist_ids), desc='getting songs from your playlists', leave=False) as pbar:
         for playlist_id in playlist_ids:
-            track_ids += get_track_ids(spoti.get_playlist_items(playlist_id))
+            playlist_items += spoti.get_playlist_items(playlist_id)
             pbar.update()
 
-    return track_ids
+    return playlist_items
 
 
 def move_n_tracks_to_top(n, playlist_id):

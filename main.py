@@ -1,14 +1,15 @@
 from argparse import ArgumentParser
-from config import user_config
 from src.modes import *
 import sys
+
+modes = ['lucky', 'move', 'shuffle', 'top_playlist', 'fork', 'merge', 'group', 'news']
 
 
 class CLI:
     def __init__(self):
         parser = ArgumentParser(usage='python3 main.py <mode> [<args>]')
 
-        parser.add_argument('mode', choices=['lucky', 'move', 'shuffle', 'top_playlist', 'fork', 'merge', 'group'])
+        parser.add_argument('mode', choices=modes)
 
         args = parser.parse_args(sys.argv[1:2])
 
@@ -101,6 +102,16 @@ class CLI:
         args = parser.parse_args(sys.argv[2:])
 
         group_playlists(args.group_name, args.description, args.playlists)
+
+    @staticmethod
+    def news():
+        parser = ArgumentParser(usage='python3 main.py news [-f]')
+
+        parser.add_argument('-f', '--force', action='store_true', help='rebuild the news playlist')
+
+        args = parser.parse_args(sys.argv[2:])
+
+        add_newly_added(args.force)
 
 
 if __name__ == '__main__':

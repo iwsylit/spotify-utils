@@ -2,7 +2,8 @@
 user_config = {
     'user_id': '',
     'lucky_playlist_name': '',
-    'excluded_playlist_names': [''],  # names of playlists that won't be added to the lucky playlist
+    'newly_added_playlist_name': '',
+    'excluded_playlist_names': [],  # names of playlists that won't be added to the lucky and news playlist
     'default_move_playlist_name': ''
 }
 
