@@ -3,17 +3,21 @@ from json import load, dump
 from src.utils import *
 from src import spoti
 import os
-
+from collections import OrderedDict
+from datetime import datetime
 
 playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
+lucky_playlist_id = playlist_name_to_id(user_config['lucky_playlist_name'], playlist_name_to_id_dict)
+newly_added_playlist_id = playlist_name_to_id(user_config['newly_added_playlist_name'], playlist_name_to_id_dict)
+
+excluded_playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict),
+                                 user_config['excluded_playlist_names']))
+excluded_playlist_ids.append(lucky_playlist_id)
+excluded_playlist_ids.append(newly_added_playlist_id)
+
 
 def update_lucky(force):
-    lucky_playlist_id = playlist_name_to_id(user_config['lucky_playlist_name'], playlist_name_to_id_dict)
-    excluded_playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict),
-                                     user_config['excluded_playlist_names']))
-    excluded_playlist_ids.append(lucky_playlist_id)
-
     if force:
         spoti.clear_playlist(lucky_playlist_id)
 
@@ -23,7 +27,7 @@ def update_lucky(force):
     user_playlist_ids = get_playlist_ids(spoti.get_user_playlists(user_config['user_id']))
     considered_playlist_ids = exclude(user_playlist_ids, excluded_playlist_ids)
 
-    unique_track_ids = set(get_playlists_track_ids(considered_playlist_ids))
+    unique_track_ids = set(get_track_ids(get_playlists_tracks(considered_playlist_ids)))
 
     tracks_to_add = exclude(unique_track_ids, lucky_playlist_track_ids)
     tracks_to_delete = exclude(lucky_playlist_track_ids, unique_track_ids)
@@ -125,7 +129,7 @@ def group_playlists(group_name, description, playlists):
         group_id = groups[group_name]['group_id']
 
         group_track_ids = get_track_ids(spoti.get_playlist_items(group_id))
-        unique_groupped_track_ids = set(get_playlists_track_ids(playlist_ids))
+        unique_groupped_track_ids = set(get_track_ids(get_playlists_tracks(playlist_ids)))
 
         tracks_to_add = exclude(unique_groupped_track_ids, group_track_ids)
         tracks_to_delete = exclude(group_track_ids, unique_groupped_track_ids)
@@ -144,7 +148,7 @@ def group_playlists(group_name, description, playlists):
         playlist_ids = list(map(lambda n: playlist_name_to_id(n, playlist_name_to_id_dict), playlists))
         group_id = spoti.create_playlist(user_config['user_id'], group_name, description)['id']
 
-        spoti.add_tracks_to_playlist(group_id, list(set(get_playlists_track_ids(playlist_ids))))
+        spoti.add_tracks_to_playlist(group_id, list(set(get_track_ids(get_playlists_tracks(playlist_ids)))))
 
         groups[group_name] = {
             'group_id': group_id,
@@ -156,3 +160,42 @@ def group_playlists(group_name, description, playlists):
 
         print('{} group has been created. To update it you can use "main.py group {}" '
               'command without additional parameters'.format(group_name, group_name))
+
+
+def add_newly_added(force):
+    user_playlist_ids = get_playlist_ids(spoti.get_user_playlists(user_config['user_id']))
+    considered_playlist_ids = exclude(user_playlist_ids, excluded_playlist_ids)
+
+    if force:
+        spoti.clear_playlist(newly_added_playlist_id)
+
+    user_tracks = get_playlists_tracks(considered_playlist_ids)
+
+    newly_added_playlist_items = spoti.get_playlist_items(newly_added_playlist_id)
+    newly_added_playlist_track_ids = get_track_ids(newly_added_playlist_items)
+
+    for track in user_tracks:
+        track['added_at'] = datetime.strptime(track['added_at'], '%Y-%m-%dT%H:%M:%SZ')
+
+    newly_added_tracks_ids = get_track_ids(reversed(sorted(user_tracks, key=lambda t: t['added_at'])))
+    newly_added_unique_tracks_ids = list(OrderedDict.fromkeys(newly_added_tracks_ids))
+
+    tracks_to_add = exclude(newly_added_unique_tracks_ids, newly_added_playlist_track_ids)
+    tracks_to_delete = exclude(newly_added_playlist_track_ids, newly_added_unique_tracks_ids)
+
+    if len(tracks_to_add) != 0:
+        spoti.add_tracks_to_playlist(newly_added_playlist_id, tracks_to_add)
+
+        if not force:
+            spoti.reorder_playlist_items(playlist_id=newly_added_playlist_id,
+                                         range_start=len(newly_added_playlist_track_ids) - len(tracks_to_add) + 1,
+                                         insert_before=0,
+                                         range_length=len(tracks_to_add))
+
+    spoti.delete_tracks_from_playlist(newly_added_playlist_id, tracks_to_delete)
+
+    print('Your new tracks was added to the "news" playlist.')
+
+
+if __name__ == '__main__':
+    add_newly_added(False)

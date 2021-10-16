@@ -51,7 +51,7 @@ def delete_tracks_from_playlist(playlist_id, track_ids):
 def clear_playlist(playlist_id):
     track_ids = [item['track']['id'] for item in get_playlist_items(playlist_id)]
 
-    with tqdm(total=len(track_ids), desc='clearing lucky playlist', leave=False) as pbar:
+    with tqdm(total=len(track_ids), desc='clearing playlist', leave=False) as pbar:
         for i in range(0, len(track_ids), 100):
             spotify_client.playlist_remove_all_occurrences_of_items(playlist_id, track_ids[i: i + 100])
             pbar.update(100)
