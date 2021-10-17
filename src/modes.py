@@ -17,6 +17,7 @@ excluded_playlist_ids.append(lucky_playlist_id)
 excluded_playlist_ids.append(newly_added_playlist_id)
 
 
+# TODO: refactor to always return the right messages
 def update_lucky(force):
     if force:
         spoti.clear_playlist(lucky_playlist_id)
@@ -35,7 +36,10 @@ def update_lucky(force):
     spoti.add_tracks_to_playlist(lucky_playlist_id, tracks_to_add)
     spoti.delete_tracks_from_playlist(lucky_playlist_id, tracks_to_delete)
 
-    print('Your lucky playlist has been updated.')
+    message = 'Your lucky playlist has been updated.'
+
+    print(message)
+    return message
 
 
 def move_to_top(n, playlist_name):
@@ -44,9 +48,12 @@ def move_to_top(n, playlist_name):
     move_n_tracks_to_top(n, playlist_id)
 
     if n == 1:
-        print('1 song of "{}" playlist has been moved to the top.'.format(playlist_name))
+        message = '1 song of "{}" playlist has been moved to the top.'.format(playlist_name)
     else:
-        print('{} songs of "{}" playlist have been moved to the top.'.format(n, playlist_name))
+        message = '{} songs of "{}" playlist have been moved to the top.'.format(n, playlist_name)
+
+    print(message)
+    return message
 
 
 def shuffle(playlist_name):
@@ -54,7 +61,10 @@ def shuffle(playlist_name):
 
     shuffle_playlist(playlist_id)
 
-    print('"{}" playlist has been shuffled.'.format(playlist_name))
+    message = '"{}" playlist has been shuffled.'.format(playlist_name)
+
+    print(message)
+    return message
 
 
 def create_top_songs_playlist(time_range, n, playlist_name, description):
@@ -77,7 +87,10 @@ def create_top_songs_playlist(time_range, n, playlist_name, description):
 
     spoti.add_tracks_to_playlist(playlist_id, top_track_ids)
 
-    print('{} top playlist containing {} songs has been created.'.format(time_range, n))
+    message = '{} top playlist containing {} songs has been created.'.format(time_range, n)
+
+    print(message)
+    return message
 
 
 def fork_playlist(owner_id, playlist_name, name, description):
@@ -94,7 +107,10 @@ def fork_playlist(owner_id, playlist_name, name, description):
 
     spoti.add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
-    print('"{}" playlist was stolen.'.format(playlist_name))
+    message = '"{}" playlist was stolen.'.format(playlist_name)
+
+    print(message)
+    return message
 
 
 def merge_playlists(first_playlist_name, second_playlist_name):
@@ -113,7 +129,10 @@ def merge_playlists(first_playlist_name, second_playlist_name):
 
     spoti.add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
-    print('"{}" and "{}" was merged.'.format(first_playlist_name, second_playlist_name))
+    message = '"{}" and "{}" was merged.'.format(first_playlist_name, second_playlist_name)
+
+    print(message)
+    return message
 
 
 def group_playlists(group_name, description, playlists):
@@ -137,7 +156,10 @@ def group_playlists(group_name, description, playlists):
         spoti.add_tracks_to_playlist(group_id, tracks_to_add)
         spoti.delete_tracks_from_playlist(group_id, tracks_to_delete)
 
-        print('{} group has been updated.'.format(group_name))
+        message = '{} group has been updated.'.format(group_name)
+
+        print(message)
+        return message
     else:
         if not playlists:
             print('Have not found this group. Specify playlist names to group them.')
@@ -158,8 +180,11 @@ def group_playlists(group_name, description, playlists):
         with open('.groups', 'w') as f:
             dump(groups, f, indent=4)
 
-        print('{} group has been created. To update it you can use "main.py group {}" '
-              'command without additional parameters'.format(group_name, group_name))
+        message = '{} group has been created. To update it you can use "main.py group {}" ' \
+                  'command without additional parameters'.format(group_name, group_name)
+
+        print(message)
+        return message
 
 
 def add_newly_added(force):
@@ -194,7 +219,10 @@ def add_newly_added(force):
 
     spoti.delete_tracks_from_playlist(newly_added_playlist_id, tracks_to_delete)
 
-    print('Your new tracks was added to the "news" playlist.')
+    message = 'Your new tracks was added to the "news" playlist.'
+
+    print(message)
+    return message
 
 
 if __name__ == '__main__':
