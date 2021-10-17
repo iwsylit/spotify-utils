@@ -7,7 +7,7 @@ from config import user_config
 app = FastAPI()
 
 
-@app.get('/lucky')
+@app.post('/lucky')
 @handle_assertion_error
 async def lucky(force: bool = False):
     message = update_lucky(force)
@@ -15,7 +15,7 @@ async def lucky(force: bool = False):
     return {'message': message}
 
 
-@app.get('/move')
+@app.post('/move')
 @handle_assertion_error
 async def move(
         playlist_name: str = user_config['default_move_playlist_name'],
@@ -26,7 +26,7 @@ async def move(
     return {'message': message}
 
 
-@app.get('/shuffle')
+@app.post('/shuffle')
 @handle_assertion_error
 async def shuffle_playlist(playlist_name: str):
     message = shuffle(playlist_name)
@@ -34,7 +34,7 @@ async def shuffle_playlist(playlist_name: str):
     return {'message': message}
 
 
-@app.get(
+@app.post(
     '/top_playlist',
     description='time_range = "short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data'
 )
@@ -50,7 +50,7 @@ async def top_playlist(
     return {'message': message}
 
 
-@app.get('/fork')
+@app.post('/fork')
 @handle_assertion_error
 async def fork_playlist(
         owner_id: str,
@@ -63,7 +63,7 @@ async def fork_playlist(
     return {'message': message}
 
 
-@app.get('/merge')
+@app.post('/merge')
 @handle_assertion_error
 async def merge(
         first_playlist_name: str,
@@ -74,7 +74,7 @@ async def merge(
     return {'message': message}
 
 
-@app.get(
+@app.post(
     '/group',
     description='playlists - playlist names space separated'
 )
@@ -91,7 +91,7 @@ async def group(
     return {'message': message}
 
 
-@app.get('/news')
+@app.post('/news')
 @handle_assertion_error
 async def news(force: bool = False):
     message = add_newly_added(force)
