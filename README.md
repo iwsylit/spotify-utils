@@ -11,8 +11,11 @@ Some handy utils for Spotify:
 8. Gather songs from all your playlists to a specified *"news"* playlist and order them by date added
 9. *Something else?*
 
+It is possible to use these utils via CLI or API.
+
 ## Requirements
-**Python 3** with ***spotipy*** and ***tqdm*** packages.
+**Python 3** with ***spotipy*** and ***tqdm*** packages.\
+If you want to use API, ***fast-api*** is needed.
 
 ### Connecting to Spotify's API
 You have to connect to Spotify's API to use these utils.
@@ -40,7 +43,7 @@ Fill `config.py` file:
  * Fill names of the playlists you don't want to be added to the lucky playlist
  * Optionally fill the default playlist for song moving
 
-## Usage
+## CLI usage
 `python3 main.py <mode> [<args>]` 
 
 Possible modes:
@@ -70,3 +73,10 @@ Use `python3 main.py <mode> -h` to see arguments for each mode.
     - `python3 main.py fork f3ed4n4boipjflbzepw7rffte mischmasz`
  * Create group of *PLAYLIST_NAME_1* and *PLAYLIST_NAME_2* playlists called *GROUP_NAME*:
     - `python3 main.py group GROUP_NAME -p PLAYLIST_NAME_1 PLAYLIST_NAME_2`
+
+
+## API usage
+
+To run the API use `run.sh` script in `src/api` directory. 
+The API is available on `9876` port by default.
+See Swagger docs on `0.0.0.0:9876/docs` for more help.
