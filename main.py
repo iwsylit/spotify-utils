@@ -13,7 +13,11 @@ class CLI:
 
         args = parser.parse_args(sys.argv[1:2])
 
-        getattr(self, args.mode)()
+        try:
+            message = getattr(self, args.mode)()
+            print(message)
+        except AssertionError as e:
+            print(e)
 
     @staticmethod
     def lucky():
@@ -23,7 +27,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        update_lucky(args.force)
+        message = update_lucky(args.force)
+        return message
 
     @staticmethod
     def move():
@@ -35,7 +40,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        move_to_top(args.n, args.playlist_name)
+        message = move_to_top(args.n, args.playlist_name)
+        return message
 
     @staticmethod
     def shuffle():
@@ -46,7 +52,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        shuffle(args.playlist_name)
+        message = shuffle(args.playlist_name)
+        return message
 
     @staticmethod
     def top_playlist():
@@ -62,7 +69,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        create_top_songs_playlist(args.time_range, args.n, args.playlist_name, args.description)
+        message = create_top_songs_playlist(args.time_range, args.n, args.playlist_name, args.description)
+        return message
 
     @staticmethod
     def fork():
@@ -75,7 +83,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        fork_playlist(args.owner_id, args.playlist_name, args.name, args.description)
+        message = fork_playlist(args.owner_id, args.playlist_name, args.name, args.description)
+        return message
 
     @staticmethod
     def merge():
@@ -88,7 +97,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        merge_playlists(args.base_playlist_name, args.other_playlist_name)
+        message = merge_playlists(args.base_playlist_name, args.other_playlist_name)
+        return message
 
     @staticmethod
     def group():
@@ -101,7 +111,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        group_playlists(args.group_name, args.description, args.playlists)
+        message = group_playlists(args.group_name, args.description, args.playlists)
+        return message
 
     @staticmethod
     def news():
@@ -111,7 +122,8 @@ class CLI:
 
         args = parser.parse_args(sys.argv[2:])
 
-        add_newly_added(args.force)
+        message = add_newly_added(args.force)
+        return message
 
 
 if __name__ == '__main__':
