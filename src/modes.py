@@ -17,7 +17,6 @@ excluded_playlist_ids.append(lucky_playlist_id)
 excluded_playlist_ids.append(newly_added_playlist_id)
 
 
-# TODO: refactor to always return the right messages
 def update_lucky(force):
     if force:
         spoti.clear_playlist(lucky_playlist_id)
@@ -36,41 +35,34 @@ def update_lucky(force):
     spoti.add_tracks_to_playlist(lucky_playlist_id, tracks_to_add)
     spoti.delete_tracks_from_playlist(lucky_playlist_id, tracks_to_delete)
 
-    message = 'Your lucky playlist has been updated.'
-
-    print(message)
-    return message
+    return 'Your lucky playlist has been updated.'
 
 
 def move_to_top(n, playlist_name):
+    assert n > 1, 'I won\'t move less than one song.'
+    playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
+
     playlist_id = playlist_name_to_id(playlist_name, playlist_name_to_id_dict)
 
     move_n_tracks_to_top(n, playlist_id)
 
     if n == 1:
-        message = '1 song of "{}" playlist has been moved to the top.'.format(playlist_name)
+        return '1 song of "{}" playlist has been moved to the top.'.format(playlist_name)
     else:
-        message = '{} songs of "{}" playlist have been moved to the top.'.format(n, playlist_name)
-
-    print(message)
-    return message
+        return '{} songs of "{}" playlist have been moved to the top.'.format(n, playlist_name)
 
 
 def shuffle(playlist_name):
+    playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
     playlist_id = playlist_name_to_id(playlist_name, playlist_name_to_id_dict)
 
     shuffle_playlist(playlist_id)
 
-    message = '"{}" playlist has been shuffled.'.format(playlist_name)
-
-    print(message)
-    return message
+    return '"{}" playlist has been shuffled.'.format(playlist_name)
 
 
 def create_top_songs_playlist(time_range, n, playlist_name, description):
-    if n < 1:
-        print('I won\'t add less then one song to the playlist')
-        exit()
+    assert n > 1, 'I won\'t add less then one song to the playlist'
 
     if n > 50:
         print('That\'s too much songs, master. I\'ll put only 50 of them in the playlist.')
@@ -87,10 +79,7 @@ def create_top_songs_playlist(time_range, n, playlist_name, description):
 
     spoti.add_tracks_to_playlist(playlist_id, top_track_ids)
 
-    message = '{} top playlist containing {} songs has been created.'.format(time_range, n)
-
-    print(message)
-    return message
+    return '{} top playlist containing {} songs has been created.'.format(time_range, n)
 
 
 def fork_playlist(owner_id, playlist_name, name, description):
@@ -101,19 +90,21 @@ def fork_playlist(owner_id, playlist_name, name, description):
     if not name:
         name = playlist_name
     if not description:
-        description = '{} // playlist i\'ve stolen from {}'.format(spoti.get_playlist_description(playlist_id), spoti.get_user_name(owner_id))
+        description = '{} // playlist i\'ve stolen from {}'.format(
+            spoti.get_playlist_description(playlist_id),
+            spoti.get_user_name(owner_id)
+        )
 
     new_playlist_id = spoti.create_playlist(user_config['user_id'], name, description)['id']
 
     spoti.add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
-    message = '"{}" playlist was stolen.'.format(playlist_name)
-
-    print(message)
-    return message
+    return '"{}" playlist was stolen.'.format(playlist_name)
 
 
 def merge_playlists(first_playlist_name, second_playlist_name):
+    playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
+
     base_playlist_id = playlist_name_to_id(first_playlist_name, playlist_name_to_id_dict)
     other_playlist_id = playlist_name_to_id(second_playlist_name, playlist_name_to_id_dict)
 
@@ -129,13 +120,11 @@ def merge_playlists(first_playlist_name, second_playlist_name):
 
     spoti.add_tracks_to_playlist(new_playlist_id, tracks_to_add)
 
-    message = '"{}" and "{}" was merged.'.format(first_playlist_name, second_playlist_name)
-
-    print(message)
-    return message
+    return '"{}" and "{}" was merged.'.format(first_playlist_name, second_playlist_name)
 
 
 def group_playlists(group_name, description, playlists):
+    playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
     if os.path.exists('.groups'):
         with open('.groups') as f:
             groups = load(f)
@@ -156,14 +145,10 @@ def group_playlists(group_name, description, playlists):
         spoti.add_tracks_to_playlist(group_id, tracks_to_add)
         spoti.delete_tracks_from_playlist(group_id, tracks_to_delete)
 
-        message = '{} group has been updated.'.format(group_name)
-
-        print(message)
-        return message
+        return '{} group has been updated.'.format(group_name)
     else:
-        if not playlists:
-            print('Have not found this group. Specify playlist names to group them.')
-            exit()
+        assert playlists, 'Have not found this group. Specify playlist names to group them.'
+
         if not description:
             description = 'group of the {} playlists'.format(', '.join(playlists))
 
@@ -180,11 +165,8 @@ def group_playlists(group_name, description, playlists):
         with open('.groups', 'w') as f:
             dump(groups, f, indent=4)
 
-        message = '{} group has been created. To update it you can use "main.py group {}" ' \
-                  'command without additional parameters'.format(group_name, group_name)
-
-        print(message)
-        return message
+        return '{} group has been created. To update it you can use "main.py group {}" ' \
+               'command without additional parameters'.format(group_name, group_name)
 
 
 def add_newly_added(force):
@@ -219,11 +201,4 @@ def add_newly_added(force):
 
     spoti.delete_tracks_from_playlist(newly_added_playlist_id, tracks_to_delete)
 
-    message = 'Your new tracks was added to the "news" playlist.'
-
-    print(message)
-    return message
-
-
-if __name__ == '__main__':
-    add_newly_added(False)
+    return 'Your new tracks was added to the "news" playlist.'
