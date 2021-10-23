@@ -3,8 +3,8 @@
 Some handy utils for Spotify:
 1. Move N songs from the bottom to the top of a specified playlist
 2. Gather songs from all your playlists to a *"lucky"* playlist
-3. Shuffle playlist
-4. Create playlist containing your top songs of all time, the last six months or the last month
+3. Shuffle a playlist
+4. Create a playlist containing your top songs of all time, the last six months or the last month
 5. Fork someone's playlist
 6. Merge two playlists
 7. Group playlists
@@ -48,14 +48,14 @@ Fill `config.py` file:
 `python3 main.py <mode> [<args>]` 
 
 Possible modes:
- * "lucky" - create playlist containing all your songs
+ * "lucky" - create a playlist containing all your songs
  * "move" - move n songs from the bottom to the top of a playlist
  * "shuffle" - shuffle songs in a playlist
- * "top_playlist" - create playlist containing your top songs
+ * "top_playlist" - create a playlist containing your top songs
  * "fork" - steal someone's playlist
  * "merge" - merge two playlists
  * "group" - group playlists
- * "news" - create playlist containing all your songs ordered by date added
+ * "news" - create a playlist containing all your songs ordered by date added
    
 Use `python3 main.py <mode> -h` to see arguments for each mode.
 
