@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from utils import handle_assertion_error
-import sys; sys.path.append('../'); sys.path.append('../../')
-from modes import *
+import sys; sys.path.append('..')
+from src.modes import *
 from config import user_config
 
 app = FastAPI()
