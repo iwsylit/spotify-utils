@@ -16,7 +16,7 @@ class CLI:
         try:
             message = getattr(self, args.mode)()
             print(message)
-        except AssertionError as e:
+        except ValueError as e:
             print(e)
 
     @staticmethod

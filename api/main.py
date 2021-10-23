@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from utils import handle_assertion_error
+from utils import handle_value_error
 import sys; sys.path.append('..')
 from src.modes import *
 from config import user_config
@@ -8,7 +8,7 @@ app = FastAPI()
 
 
 @app.post('/lucky')
-@handle_assertion_error
+@handle_value_error
 async def lucky(force: bool = False):
     message = update_lucky(force)
 
@@ -16,7 +16,7 @@ async def lucky(force: bool = False):
 
 
 @app.post('/move')
-@handle_assertion_error
+@handle_value_error
 async def move(
         playlist_name: str = user_config['default_move_playlist_name'],
         n: int = 1
@@ -27,7 +27,7 @@ async def move(
 
 
 @app.post('/shuffle')
-@handle_assertion_error
+@handle_value_error
 async def shuffle_playlist(playlist_name: str):
     message = shuffle(playlist_name)
 
@@ -38,7 +38,7 @@ async def shuffle_playlist(playlist_name: str):
     '/top_playlist',
     description='time_range = "short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data'
 )
-@handle_assertion_error
+@handle_value_error
 async def top_playlist(
         time_range: str,
         n: int = 50,
@@ -51,7 +51,7 @@ async def top_playlist(
 
 
 @app.post('/fork')
-@handle_assertion_error
+@handle_value_error
 async def fork_playlist(
         owner_id: str,
         playlist_name: str,
@@ -64,7 +64,7 @@ async def fork_playlist(
 
 
 @app.post('/merge')
-@handle_assertion_error
+@handle_value_error
 async def merge(
         first_playlist_name: str,
         second_playlist_name: str
@@ -78,7 +78,7 @@ async def merge(
     '/group',
     description='playlists - playlist names space separated'
 )
-@handle_assertion_error
+@handle_value_error
 async def group(
         group_name: str,
         description: str = None,
@@ -92,7 +92,7 @@ async def group(
 
 
 @app.post('/news')
-@handle_assertion_error
+@handle_value_error
 async def news(force: bool = False):
     message = add_newly_added(force)
 

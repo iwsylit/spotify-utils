@@ -39,7 +39,9 @@ def update_lucky(force):
 
 
 def move_to_top(n, playlist_name):
-    assert n > 1, 'I won\'t move less than one song.'
+    if n < 1:
+        raise ValueError('I won\'t move less than one song.')
+
     playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
     playlist_id = playlist_name_to_id(playlist_name, playlist_name_to_id_dict)
@@ -62,7 +64,8 @@ def shuffle(playlist_name):
 
 
 def create_top_songs_playlist(time_range, n, playlist_name, description):
-    assert n > 1, 'I won\'t add less then one song to the playlist'
+    if n < 1:
+        raise ValueError('I won\'t add less then one song to the playlist')
 
     if n > 50:
         print('That\'s too much songs, master. I\'ll put only 50 of them in the playlist.')
@@ -147,7 +150,8 @@ def group_playlists(group_name, description, playlists):
 
         return '{} group has been updated.'.format(group_name)
     else:
-        assert playlists, 'Have not found this group. Specify playlist names to group them.'
+        if not playlists:
+            raise ValueError('Have not found this group. Specify playlist names to group them.')
 
         if not description:
             description = 'group of the {} playlists'.format(', '.join(playlists))

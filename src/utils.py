@@ -31,7 +31,8 @@ def create_playlist_name_to_id_dict(owner_id):
 
 
 def playlist_name_to_id(playlist_name, playlist_name_to_id_dict):
-    assert playlist_name in playlist_name_to_id_dict.keys(), '"{}" playlist does not exist.'.format(playlist_name)
+    if playlist_name not in playlist_name_to_id_dict.keys():
+        raise ValueError('"{}" playlist does not exist.'.format(playlist_name))
 
     return playlist_name_to_id_dict[playlist_name]
 
@@ -51,8 +52,9 @@ def move_n_tracks_to_top(n, playlist_id):
     track_ids = get_track_ids(spoti.get_playlist_items(playlist_id))
     playlist_len = len(track_ids)
 
-    assert n < playlist_len, 'Number of songs you want to move is more than there are songs in the playlist, '\
-                             'it could cause unexpected results, so i refuse to do that.'
+    if n > playlist_len:
+        raise ValueError('Number of songs you want to move is more than there are songs in the playlist, '
+                         'it could cause unexpected results, so i refuse to do that.')
 
     for i in [100] * (n // 100) + [n % 100]:  # looks weird, but it is a super-hyper-extra cool engineering decision
         spoti.reorder_playlist_items(
