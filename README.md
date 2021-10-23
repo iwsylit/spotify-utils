@@ -11,7 +11,8 @@ Some handy utils for Spotify:
 8. Gather songs from all your playlists to a specified *"news"* playlist and order them by date added
 9. *Something else?*
 
-It is possible to use these utils via CLI or API.
+It is possible to use these utils via CLI or API.\
+The repo comes along with a [Telegram bot](https://github.com/iwsylit/spotify-utils-bot). 
 
 ## Requirements
 **Python 3** with ***spotipy*** and ***tqdm*** packages.\
@@ -35,7 +36,7 @@ Do that once before the first start:
 You can also add "playlist-modify-private" scope in `config.py` file in order to handle your private playlists, too. 
 (*probably; i did not test that*)
 
-### Configure
+## Configuration
 
 Fill `config.py` file:
  * Fill your user id
