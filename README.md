@@ -86,4 +86,8 @@ See Swagger docs on `0.0.0.0:9876/docs` for more help.
 
 To run the API in Docker
 1. Build the image `docker build -t spotify-utils .`
-2. Run it `docker run -p 9876:9876 -t -i spotify-utils`
+2. Run it `docker run -d --name spotify-utils -p 9876:9876 spotify-utils`
+
+Note: do not forget to fill the config file and to authorize in Spotify 
+(if you were already authorized, just copy your `src/.cache` before building 
+the image)
