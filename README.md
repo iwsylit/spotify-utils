@@ -81,3 +81,9 @@ Use `python3 main.py <mode> -h` to see arguments for each mode.
 To run the API use `run.sh` script in `src/api` directory. 
 The API is available on `9876` port by default.
 See Swagger docs on `0.0.0.0:9876/docs` for more help.
+
+## Docker
+
+To run the API in Docker
+1. Build the image `docker build -t spotify-utils .`
+2. Run it `docker run -p 9876:9876 -t -i spotify-utils`
