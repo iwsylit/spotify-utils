@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from utils import handle_value_error
+
 import sys; sys.path.append('..')
 from src.modes import *
 from config import user_config
@@ -76,7 +77,6 @@ async def merge(
 
 @app.post(
     '/group',
-    description='playlists - playlist names space separated'
 )
 @handle_value_error
 async def group(
@@ -84,6 +84,9 @@ async def group(
         description: str = None,
         playlists: str = None
 ):
+    """
+    :param playlists: space separated playlists names
+    """
     if playlists:
         playlists = playlists.split()
     message = group_playlists(group_name, description, playlists)
@@ -93,7 +96,7 @@ async def group(
 
 @app.post('/news')
 @handle_value_error
-async def news(force: bool = False):
-    message = add_newly_added(force)
+async def news(n: int = 50, force: bool = False):
+    message = add_newly_added(n, force)
 
     return {'message': message}

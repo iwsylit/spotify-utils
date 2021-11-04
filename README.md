@@ -8,7 +8,7 @@ Some handy utils for Spotify:
 5. Fork someone's playlist
 6. Merge two playlists
 7. Group playlists
-8. Gather songs from all your playlists to a specified *"news"* playlist and order them by date added
+8. Gather N songs from all your playlists to a specified *"news"* playlist and order them by date added
 9. *Something else?*
 
 It is possible to use these utils via CLI or API.\

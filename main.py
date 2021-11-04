@@ -118,11 +118,12 @@ class CLI:
     def news():
         parser = ArgumentParser(usage='python3 main.py news [-f]')
 
+        parser.add_argument('-n', '--n', default=50, type=int, help='number of songs to add to playlist')
         parser.add_argument('-f', '--force', action='store_true', help='rebuild the news playlist')
 
         args = parser.parse_args(sys.argv[2:])
 
-        message = add_newly_added(args.force)
+        message = add_newly_added(args.n, args.force)
         return message
 
 

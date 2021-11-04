@@ -173,7 +173,7 @@ def group_playlists(group_name, description, playlists):
                'command without additional parameters'.format(group_name, group_name)
 
 
-def add_newly_added(force):
+def add_newly_added(n, force):
     user_playlist_ids = get_playlist_ids(spoti.get_user_playlists(user_config['user_id']))
     considered_playlist_ids = exclude(user_playlist_ids, excluded_playlist_ids)
 
@@ -190,6 +190,9 @@ def add_newly_added(force):
 
     newly_added_tracks_ids = get_track_ids(reversed(sorted(user_tracks, key=lambda t: t['added_at'])))
     newly_added_unique_tracks_ids = list(OrderedDict.fromkeys(newly_added_tracks_ids))
+
+    if n:
+        newly_added_unique_tracks_ids = newly_added_unique_tracks_ids[:n]
 
     tracks_to_add = exclude(newly_added_unique_tracks_ids, newly_added_playlist_track_ids)
     tracks_to_delete = exclude(newly_added_playlist_track_ids, newly_added_unique_tracks_ids)
