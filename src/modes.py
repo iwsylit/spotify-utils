@@ -174,6 +174,9 @@ def group_playlists(group_name, description, playlists):
 
 
 def add_newly_added(n, force):
+    if n < 1:
+        raise ValueError('I won\'t create a playlist of less than one song.')
+
     user_playlist_ids = get_playlist_ids(spoti.get_user_playlists(user_config['user_id']))
     considered_playlist_ids = exclude(user_playlist_ids, excluded_playlist_ids)
 
