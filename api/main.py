@@ -35,10 +35,7 @@ async def shuffle_playlist(playlist_name: str):
     return {'message': message}
 
 
-@app.post(
-    '/top_playlist',
-    description='time_range = "short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data'
-)
+@app.post('/top_playlist')
 @handle_value_error
 async def top_playlist(
         time_range: str,
@@ -46,6 +43,9 @@ async def top_playlist(
         name: str = None,
         description: str = None
 ):
+    """
+    :param time_range: "short_term" - 1 month, "medium_term" - 6 months, "long_term" - all data'
+    """
     message = create_top_songs_playlist(time_range, n, name, description)
 
     return {'message': message}
@@ -75,9 +75,7 @@ async def merge(
     return {'message': message}
 
 
-@app.post(
-    '/group',
-)
+@app.post('/group')
 @handle_value_error
 async def group(
         group_name: str,
@@ -96,7 +94,7 @@ async def group(
 
 @app.post('/news')
 @handle_value_error
-async def news(n: int = 50, force: bool = False):
+async def news(n: int = 50, force: bool = True):
     message = add_newly_added(n, force)
 
     return {'message': message}

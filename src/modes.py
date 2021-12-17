@@ -1,10 +1,11 @@
-from config import user_config
-from json import load, dump
-from src.utils import *
-from src import spoti
 import os
 from collections import OrderedDict
 from datetime import datetime
+from json import load, dump
+
+from config import user_config
+from src import spoti
+from src.utils import *
 
 playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
@@ -41,7 +42,7 @@ def update_lucky(force):
 def move_to_top(n, playlist_name):
     if n < 1:
         raise ValueError('I won\'t move less than one song.')
-
+    global playlist_name_to_id_dict
     playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
     playlist_id = playlist_name_to_id(playlist_name, playlist_name_to_id_dict)
@@ -55,6 +56,7 @@ def move_to_top(n, playlist_name):
 
 
 def shuffle(playlist_name):
+    global playlist_name_to_id_dict
     playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
     playlist_id = playlist_name_to_id(playlist_name, playlist_name_to_id_dict)
 
@@ -106,6 +108,7 @@ def fork_playlist(owner_id, playlist_name, name, description):
 
 
 def merge_playlists(first_playlist_name, second_playlist_name):
+    global playlist_name_to_id_dict
     playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
 
     base_playlist_id = playlist_name_to_id(first_playlist_name, playlist_name_to_id_dict)
@@ -127,6 +130,7 @@ def merge_playlists(first_playlist_name, second_playlist_name):
 
 
 def group_playlists(group_name, description, playlists):
+    global playlist_name_to_id_dict
     playlist_name_to_id_dict = create_playlist_name_to_id_dict(user_config['user_id'])
     if os.path.exists('.groups'):
         with open('.groups') as f:
@@ -191,7 +195,7 @@ def add_newly_added(n, force):
     for track in user_tracks:
         track['added_at'] = datetime.strptime(track['added_at'], '%Y-%m-%dT%H:%M:%SZ')
 
-    newly_added_tracks_ids = get_track_ids(reversed(sorted(user_tracks, key=lambda t: t['added_at'])))
+    newly_added_tracks_ids = get_track_ids(sorted(user_tracks, key=lambda t: t['added_at']))
     newly_added_unique_tracks_ids = list(OrderedDict.fromkeys(newly_added_tracks_ids))
 
     if n:
