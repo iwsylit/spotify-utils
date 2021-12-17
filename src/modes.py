@@ -196,7 +196,7 @@ def add_newly_added(n, force):
         track['added_at'] = datetime.strptime(track['added_at'], '%Y-%m-%dT%H:%M:%SZ')
 
     newly_added_tracks_ids = get_track_ids(sorted(user_tracks, key=lambda t: t['added_at']))
-    newly_added_unique_tracks_ids = list(OrderedDict.fromkeys(newly_added_tracks_ids))
+    newly_added_unique_tracks_ids = list(reversed(OrderedDict.fromkeys(newly_added_tracks_ids)))
 
     if n:
         newly_added_unique_tracks_ids = newly_added_unique_tracks_ids[:n]
