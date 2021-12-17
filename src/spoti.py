@@ -1,14 +1,13 @@
-from config import spotify_client_config
-from spotipy.oauth2 import SpotifyOAuth
-from spotipy import Spotify
-from tqdm import tqdm
 import os
+from spotipy import Spotify
+from spotipy.oauth2 import SpotifyOAuth
+from tqdm import tqdm
 
+from config import spotify_client_config
 
 directory = os.path.dirname(os.path.relpath(__file__))
 if directory:
     os.chdir(directory)
-
 
 auth_manager = SpotifyOAuth(
     client_id=spotify_client_config['client_id'],

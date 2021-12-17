@@ -1,6 +1,7 @@
-from src import spoti
 from random import sample
 from tqdm import tqdm
+
+from src import spoti
 
 
 def get_track_ids(playlist_items):

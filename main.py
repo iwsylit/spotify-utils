@@ -1,8 +1,9 @@
-from argparse import ArgumentParser
-from src.modes import *
 import sys
+from argparse import ArgumentParser
 
-modes = ['lucky', 'move', 'shuffle', 'top_playlist', 'fork', 'merge', 'group', 'news']
+from src.modes import *
+
+modes = ('lucky', 'move', 'shuffle', 'top_playlist', 'fork', 'merge', 'group', 'news')
 
 
 class CLI:
@@ -102,7 +103,8 @@ class CLI:
 
     @staticmethod
     def group():
-        parser = ArgumentParser(usage='python3 main.py group <group_name> [-d DESCRIPTION] [-p PLAYLIST_1 PLAYLIST_2 ...]')
+        parser = ArgumentParser(
+            usage='python3 main.py group <group_name> [-d DESCRIPTION] [-p PLAYLIST_1 PLAYLIST_2 ...]')
 
         parser.add_argument('group_name', type=str,
                             help='name the group')
